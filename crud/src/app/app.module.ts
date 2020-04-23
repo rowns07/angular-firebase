@@ -11,11 +11,15 @@ import { AppComponent } from './app.component';
 import { CalendarModule } from 'primeng/calendar';
 import { environment } from 'src/environments/environment';
 import { LoginComponent } from './public/login/login.component';
+import { AuthenticationService } from './services/authentication.service';
+import { FormsModule } from '@angular/forms';
+import { PainelComponent } from './admin/painel/painel.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    PainelComponent
   ],
   imports: [
     BrowserModule,
@@ -24,9 +28,12 @@ import { LoginComponent } from './public/login/login.component';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
     AngularFireAuthModule,
-    CalendarModule
+    CalendarModule,
+    FormsModule
   ],
-  providers: [],
+  providers: [
+    AuthenticationService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
