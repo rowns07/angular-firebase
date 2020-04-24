@@ -1,21 +1,24 @@
-import { NgModule, Component } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './public/login/login.component';
-import { PainelComponent } from './admin/painel/painel.component';
+import { AuthguardService } from './services/authguard.service';
 
 
 const routes: Routes = [
 
   {
     path: '',
-    component: LoginComponent
-  }, {
-    path: 'admin/painel',
-    component: PainelComponent
+    redirectTo: 'login',
+    pathMatch: 'full'
   },
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'admin/painel',
+    loadChildren: () => import('./components/admin/painel/painel.module').then(m => m.PainelModule),
+    canActivate: [AuthguardService]
   }
 ];
 
