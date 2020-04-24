@@ -1,23 +1,34 @@
 <div>
     <h3 class="text-center pt-5">Sistema de Requisições</h3>
-    <form class="form-signin" #f="ngForm">
-        <!-- <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1> -->
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" name="emailControle"
-            #emailControle="ngModel" type="text" [(ngModel)]="email" maxlength="60" email required autofocus>
-        <div *ngIf="emailControle.invalid" class="text-danger">
-            <div *ngIf="emailControle.errors.required">
-                Email é obrigatorio
+    <fieldset>
+        <form class="form-signin" #f="ngForm">
+            <!-- <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1> -->
+            <label for="inputEmail" class="sr-only">Email address</label>
+            <input type="email" id="inputEmail" class="form-control" placeholder="Email address" name="emailControle"
+                #emailControle="ngModel" type="text" [(ngModel)]="email" maxlength="60" email required autofocus>
+            <div *ngIf="emailControle.invalid" class="text-danger">
+                <div *ngIf="emailControle.errors.required">
+                    Email é obrigatorio
+                </div>
+                <div *ngIf="emailControle.errors.email">
+                    Email Inválido
+                </div>
             </div>
-            <div *ngIf="emailControle.errors.email">
-                Email Inválido
-            </div>
-        </div>
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input name="passwordControl" #passwordControl="ngModel" [(ngModel)]="senha" type="password"
-            class="form-control" placeholder="Senha" required minlength="6" maxlength="30">
-        <button class="btn btn-lg btn-primary btn-block" type="submit" (click)="logar()">Sign in</button>
-        <button class="btn btn-lg btn-info btn-block" (click)="enviaLink()">Resetar</button>
+            <label for="inputPassword" class="sr-only">Password</label>
+            <input name="passwordControl" #passwordControl="ngModel" [(ngModel)]="senha" type="password"
+                class="form-control" placeholder="Senha" required minlength="6" maxlength="30">
+            <span [hidden]="passwordControl.pristine || !passwordControl.errors?.required" class="text-danger">Senha
+                obrigatória!</span>
+            <button class="btn btn-lg btn-primary btn-block" type="submit" (click)="logar()">Sign in</button>
+            <button class="btn btn-lg btn-info btn-block" (click)="enviaLink()">Resetar</button>
 
-    </form>
+
+            <div class="alert alert-dismissible alert-danger" *ngIf="mensagem && !emailEnviado">
+                {{mensagem}}
+            </div>
+            <div class="alert alert-dismissible alert-info" *ngIf="emailEnviado">
+                Foi enviando um email para <strong>{{email}}</strong>
+            </div>
+        </form>
+    </fieldset>
 </div>
