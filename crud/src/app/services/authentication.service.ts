@@ -17,6 +17,10 @@ export class AuthenticationService {
     return this.angularFireAuth.signInWithEmailAndPassword(email, password);
   }
 
+  authUser(): Observable<firebase.User> {
+    return this.user;
+  }
+
   logout(): Promise<void> {
     return this.angularFireAuth.signOut();
   }
