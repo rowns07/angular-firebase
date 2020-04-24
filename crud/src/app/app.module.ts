@@ -13,13 +13,13 @@ import { environment } from 'src/environments/environment';
 import { LoginComponent } from './public/login/login.component';
 import { AuthenticationService } from './services/authentication.service';
 import { FormsModule } from '@angular/forms';
-import { PainelComponent } from './admin/painel/painel.component';
+import { MenuComponent } from './components/menu/menu.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    PainelComponent
+    MenuComponent
   ],
   imports: [
     BrowserModule,
