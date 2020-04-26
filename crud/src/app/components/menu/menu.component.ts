@@ -21,7 +21,9 @@ export class MenuComponent implements OnInit {
 
   sair() {
     this.authService.logout()
-      .then(() => this.router.navigate(['/']));
+      .then(() => this.router.navigate(['/']),
+        this.user = undefined
+      );
   }
 
 
