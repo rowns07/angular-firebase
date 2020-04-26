@@ -1,4 +1,3 @@
-import { Injectable } from '@angular/core';
 import { Model } from './model';
 import { Icrud } from './icrud';
 import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore/public_api';
@@ -6,9 +5,6 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { plainToClass } from 'class-transformer';
 
-@Injectable({
-  providedIn: 'root'
-})
 export abstract class IservicefirebaseService<T extends Model> implements Icrud<T> {
 
   ref: AngularFirestoreCollection<T>;
@@ -41,6 +37,10 @@ export abstract class IservicefirebaseService<T extends Model> implements Icrud<
       return
     let obj = null;
 
+    if (item instanceof this.type)
+      obj = item.toObject();
+    else
+      obj = item;
     if (id) {
       return this.ref.doc(id).set(obj);
     }
