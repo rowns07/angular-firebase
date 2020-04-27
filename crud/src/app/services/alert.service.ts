@@ -16,7 +16,7 @@ export class AlertService {
   }
 
   errorAlert(titulo?: string, mensagem?: string, icon?: string) {
-    Swal.fire(titulo, mensagem, 'warning');
+    Swal.fire(titulo, mensagem, 'error');
   }
 
   infoAlert(titulo?: string, mensagem?: string, icon?: string) {
