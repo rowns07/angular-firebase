@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import Swal from 'sweetalert2';
+import { AlertService } from 'src/app/services/alert.service';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,7 @@ export class LoginComponent implements OnInit {
   mensagem: string;
   emailEnviado: boolean;
 
-  constructor(private authServ: AuthenticationService, private router: Router) { }
+  constructor(private authServ: AuthenticationService, private router: Router, private alertService: AlertService) { }
 
   ngOnInit(): void {
   }
@@ -28,10 +29,12 @@ export class LoginComponent implements OnInit {
       this.authServ.login(this.email, this.senha)
         .then(() => {
           this.router.navigate(['/admin/painel'])
-          Swal.fire('FOI', 'AGORA DEU CERTO');
+          // Swal.fire('FOI', 'AGORA DEU CERTO');
+          this.alertService.alertSuccess('FOI', 'AGORA DEU CERTO')
         }).catch(erro => {
           let detalhes = '';
-          Swal.fire('ERROU', 'DEU RUIM HEIN');
+          this.alertService.errorAlert('Errou','Deu RRUIM HEIN')
+          // Swal.fire('ERROU', 'DEU RUIM HEIN');
           switch (erro.code) {
             case 'auth/user-not-found': {
               detalhes = 'Não existe usuário para o email informado';
@@ -74,7 +77,7 @@ export class LoginComponent implements OnInit {
         })
         .catch(erro => {
           this.mensagem = `Erro ao localizar o email. Detalhes ${erro.message}`;
-          console.log('DEU ERRO  -- ',erro.message);
+          console.log('DEU ERRO  -- ', erro.message);
         })
     }
   }
