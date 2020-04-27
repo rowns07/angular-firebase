@@ -12,6 +12,7 @@ import { AppComponent } from './app.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { LoginComponent } from './public/login/login.component';
 import { AuthenticationService } from './services/authentication.service';
+import { AlertService } from './services/alert.service';
 
 
 
@@ -32,7 +33,8 @@ import { AuthenticationService } from './services/authentication.service';
     FormsModule
   ],
   providers: [
-    AuthenticationService
+    AuthenticationService,
+    AlertService
   ],
   bootstrap: [AppComponent]
 })
