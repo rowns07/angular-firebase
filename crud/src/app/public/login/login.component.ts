@@ -22,18 +22,18 @@ export class LoginComponent implements OnInit {
 
   logar() {
     try {
-      if (this.email == undefined || this.senha == undefined) {
-        this.mensagem = 'Usuário ou senha invalidos'
-        return
+      if (this.email === undefined || this.senha === undefined) {
+        this.mensagem = 'Usuário ou senha invalidos';
+        return;
       }
       this.authServ.login(this.email, this.senha)
         .then(() => {
-          this.router.navigate(['/admin/painel'])
+          this.router.navigate(['/admin/painel']);
           // Swal.fire('FOI', 'AGORA DEU CERTO');
-          this.alertService.alertSuccess('FOI', 'AGORA DEU CERTO')
+          this.alertService.alertSuccess('FOI', 'AGORA DEU CERTO');
         }).catch(erro => {
           let detalhes = '';
-          this.alertService.errorAlert('Errou','Deu RRUIM HEIN')
+          this.alertService.errorAlert('Errou', 'Deu RRUIM HEIN');
           // Swal.fire('ERROU', 'DEU RUIM HEIN');
           switch (erro.code) {
             case 'auth/user-not-found': {
@@ -68,7 +68,8 @@ export class LoginComponent implements OnInit {
       title: 'Informe o email cadastrado',
       input: 'email',
       inputPlaceholder: 'email'
-    })
+    });
+
     if (email) {
       this.authServ.resetPassword(email)
         .then(() => {
@@ -78,7 +79,7 @@ export class LoginComponent implements OnInit {
         .catch(erro => {
           this.mensagem = `Erro ao localizar o email. Detalhes ${erro.message}`;
           console.log('DEU ERRO  -- ', erro.message);
-        })
+        });
     }
   }
 

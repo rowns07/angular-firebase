@@ -30,3 +30,31 @@
         </tr>
     </tbody>
 </table>
+
+<p-dialog [(visible)]="displayDialogDepartamento" [modal]="true">
+    <p-header>
+        Dados do Departamento
+    </p-header>
+    <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="form.value">
+
+        <form [formGroup]="form">
+            <div>
+                <label for="ocorrencia">Nome</label>
+                <input type="text" pInputText formControlName="nome" />
+            </div>
+            <div>
+                <label for="ocorrencia">Telefone</label>
+                <p-inputMask formControlName="telefone" mask="(99)9999-9999"></p-inputMask>
+            </div>
+        </form>
+
+    </div>
+    <p-footer>
+        <button [disabled]="!form.valid" type="button" class="btn btn-primary" (click)="save()">
+            <i class="fas fa-check-circle"></i> {{edit ? 'Atualizar' : 'Salvar'}}
+        </button>
+    </p-footer>
+</p-dialog>
+
+<a [routerLink]="['/admin/painel']" class="btn btn-primary ">
+    <i class="fa fa-search" aria-hidden="true"></i> Voltar</a>

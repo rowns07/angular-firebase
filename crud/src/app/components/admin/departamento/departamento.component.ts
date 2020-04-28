@@ -15,7 +15,7 @@ export class DepartamentoComponent implements OnInit {
 
   departamentos$: Observable<Departamento[]>;
   edit: boolean;
-  displayDialogDepartamento: boolean;
+  displayDialogDepartamento: Departamento;
   form: FormGroup;
 
   constructor(private departamentoService: DepartamentoService, private formBuilder: FormBuilder, private alertService: AlertService) { }
@@ -36,32 +36,32 @@ export class DepartamentoComponent implements OnInit {
   add() {
     this.form.reset();
     this.edit = false;
-    this.displayDialogDepartamento = true;
+    this.displayDialogDepartamento = new Departamento();
   }
 
   selecionarDepartamento(departamento: Departamento) {
     this.edit = true;
-    this.displayDialogDepartamento = false;
+    this.displayDialogDepartamento = new Departamento();
     this.form.setValue(departamento);
   }
 
-  save() {
+  save(): void {
     this.departamentoService.createOrUpdate(this.form.value)
       .then(() => {
-        this.displayDialogDepartamento = true;
-        this.alertService.alertSuccess(`Departamento ${this.edit ? 'salvo' : 'atualizado'} com sucesso`, '', 'success')
+        this.alertService.alertSuccess(`Departamento ${this.edit ? 'salvo' : 'atualizado'} com sucesso`, '', 'success');
+        this.displayDialogDepartamento = undefined;
       })
       .catch((erro) => {
-        this.displayDialogDepartamento = false;
+        this.displayDialogDepartamento = undefined;
         this.alertService.errorAlert(`Erro ao ${this.edit ? 'salvo' : 'atualizado'} o departamento`, `Detalhes ${erro}`);
-      })
+      });
     this.form.reset();
   }
 
   delete(departamento: Departamento) {
     Swal.fire({
       title: 'Confirma a exclusão do departamento?',
-      text: "",
+      text: '',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Sim',
@@ -72,6 +72,6 @@ export class DepartamentoComponent implements OnInit {
           .then(() =>
             this.alertService.alertSuccess('Deletado com sucesso!'));
       }
-    })
+    });
   }
 }

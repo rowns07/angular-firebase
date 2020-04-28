@@ -14,41 +14,43 @@ export abstract class IservicefirebaseService<T extends Model> implements Icrud<
   }
 
   get(id: string): Observable<T> {
-    let doc = this.ref.doc<T>(id);
-    return doc.get().pipe(map(snapshot => this.docToClass(snapshot)))
+    const doc = this.ref.doc<T>(id);
+    return doc.get().pipe(map(snapshot => this.docToClass(snapshot)));
   }
 
   docToClass(snapshotDoc): T {
-    let obj = {
+    const obj = {
       id: snapshotDoc.id,
       ...(snapshotDoc.data() as T)
-    }
-    let typed = plainToClass(this.type, obj)
+    };
+    const typed = plainToClass(this.type, obj);
     return typed;
-  };
+  }
 
   list(): Observable<T[]> {
     return this.ref.valueChanges();
   }
 
   createOrUpdate(item: T): Promise<any> {
-    let id = item.id;
-    if (!item)
-      return
+    const id = item.id;
+
+    if (!item) {
+      return;
+    }
     let obj = null;
 
-    if (item instanceof this.type)
+    if (item instanceof this.type) {
       obj = item.toObject();
-    else
-      obj = item;
+    } else { obj = item; }
     if (id) {
       return this.ref.doc(id).set(obj);
     }
-    else
+    else {
       return this.ref.add(obj).then(res => {
         obj.id = res.id; // Para salvar com o atributo id
         this.ref.doc(res.id).set(obj);
       });
+    }
   }
 
   delete(id: string): Promise<any> {

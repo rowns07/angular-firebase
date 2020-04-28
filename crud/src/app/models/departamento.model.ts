@@ -1,7 +1,7 @@
 import { Model } from '../core/model';
 
-export class Departamento  extends Model{
+export class Departamento extends Model {
 
     nome: string;
-    telefone?:string;
+    telefone?: string;
 }

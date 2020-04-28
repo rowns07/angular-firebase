@@ -5,13 +5,13 @@
 export const environment = {
   production: false,
   firebaseConfig: {
-    apiKey: "AIzaSyAcaWP_LBi0CsWYjpyiI-xMIEZZdNCAcz0",
-    authDomain: "requisecoes-app.firebaseapp.com",
-    databaseURL: "https://requisecoes-app.firebaseio.com",
-    projectId: "requisecoes-app",
-    storageBucket: "requisecoes-app.appspot.com",
-    messagingSenderId: "126436509267",
-    appId: "1:126436509267:web:8880990a4415bd8f1428a6"
+    apiKey: 'AIzaSyAcaWP_LBi0CsWYjpyiI-xMIEZZdNCAcz0',
+    authDomain: 'requisecoes-app.firebaseapp.com',
+    databaseURL: 'https://requisecoes-app.firebaseio.com',
+    projectId: 'requisecoes-app',
+    storageBucket: 'requisecoes-app.appspot.com',
+    messagingSenderId: '126436509267',
+    appId: '1:126436509267:web:8880990a4415bd8f1428a6'
   }
 };
 
