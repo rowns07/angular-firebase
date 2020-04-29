@@ -1,0 +1,113 @@
+<p-table [columns]="cols" [value]="funcionario$ |async" selectionMode="single" [(selection)]="selectedCar"
+    (onRowSelect)="onRowSelect($event)" [paginator]="true" [rows]="15">
+    <ng-template pTemplate="caption">
+        Lista de funcionarios
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                {{col.header}}
+                <p-sortIcon [field]="col.field"></p-sortIcon>
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr [pSelectableRow]="rowData">
+            <td *ngFor="let col of columns">
+                {{rowData[col.field]}}
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="summary" let-rowData>
+        <div style="text-align:left">
+            <button type="button" pButton icon="pi pi-plus" (click)="showDialogToAdd()" label="Add"></button>
+
+            <button type="button" (click)="selecionarFuncionario(selectedCar)" class="btn btn-success ">
+                <i class="fas fa-edit"></i>
+            </button>
+        </div>
+    </ng-template>
+</p-table>
+
+<button class="text-right btn btn-outline-info btn-lg mr-0" (click)="add()">
+    <i class="fas fa-plus-circle"></i>
+</button>
+
+<p-dialog header="Car Details" [(visible)]="displayDialog" [focusOnShow]="false" [responsive]="true" showEffect="fade"
+    [modal]="true" [style]="{width: '300px'}">
+    <div class="ui-g ui-fluid" *ngIf="selectedCar">
+        <div class="ui-g-12">
+            <div class="ui-g-4">
+                <label for="nome">Nome</label>
+            </div>
+            <div class="ui-g-8">
+                <input pInputText id="nome" [(ngModel)]="selectedCar.nome" autofocus />
+            </div>
+        </div>
+        <div class="ui-g-12">
+            <div class="ui-g-4">
+                <label for="email">Email</label>
+            </div>
+            <div class="ui-g-8">
+                <input pInputText id="email" [(ngModel)]="selectedCar.email" />
+            </div>
+        </div>
+        <div class="ui-g-12">
+            <div class="ui-g-4">
+                <label for="funcao">Funcao</label>
+            </div>
+            <div class="ui-g-8">
+                <input pInputText id="funcao" [(ngModel)]="selectedCar.funcao" />
+            </div>
+        </div>
+        <div class="ui-g-12">
+            <div class="ui-g-4">
+                <label for="departamento">Departamento</label>
+            </div>
+            <div class="ui-g-8">
+                <input pInputText id="departamento" [(ngModel)]="selectedCar.departamento" />
+            </div>
+        </div>
+    </div>
+    <p-footer>
+        <div class="ui-dialog-buttonpane ui-helper-clearfix">
+            <button type="button" pButton icon="pi pi-times" (click)="delete()" label="Delete"></button>
+            <button type="button" pButton icon="pi pi-check" (click)="save(selectedCar)" label="Save"></button>
+        </div>
+    </p-footer>
+</p-dialog>
+
+
+
+<p-dialog [(visible)]="displayDialogFuncionario" [modal]="true">
+    <p-header>
+        Dados do Departamento
+    </p-header>
+    <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="form.value">
+
+        <form [formGroup]="form">
+            <div>
+                <label for="ocorrencia">Nome</label>
+                <input type="text" pInputText formControlName="nome" />
+            </div>
+            <div>
+                <label for="ocorrencia">Email</label>
+                <input type="text" pInputText formControlName="email" />
+            </div>
+            <div>
+                <label for="ocorrencia">Funcao</label>
+                <input type="text" pInputText formControlName="funcao" />
+            </div>
+            <div>
+                <label for="ocorrencia">Departamento</label>
+                <input type="text" pInputText formControlName="departamento" />
+            </div>
+        </form>
+
+    </div>
+    <p-footer>
+        <button [disabled]="!form.valid" type="button" class="btn btn-primary" (click)="saveForm()">
+            <i class="fas fa-check-circle"></i> {{edit ? 'Atualizar' : 'Salvar'}}
+        </button>
+    </p-footer>
+</p-dialog>

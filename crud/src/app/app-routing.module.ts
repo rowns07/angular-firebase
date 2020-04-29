@@ -23,6 +23,10 @@ const routes: Routes = [
     path: 'admin/departamento',
     loadChildren: () => import('./components/admin/departamento/departamento.module').then(m => m.DepartamentoModule),
     canActivate: [AuthguardService]
+  }, {
+    path: 'admin/funcionario',
+    loadChildren: () => import('./components/admin/funcionario/funcionario.module').then(m => m.FuncionarioModule),
+    canActivate: [AuthguardService]
   }
 ];
 
