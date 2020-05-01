@@ -27,6 +27,10 @@ const routes: Routes = [
     path: 'admin/funcionario',
     loadChildren: () => import('./components/admin/funcionario/funcionario.module').then(m => m.FuncionarioModule),
     canActivate: [AuthguardService]
+  }, {
+    path: 'admin/funcionario-prime',
+    loadChildren: () => import('./components/admin/funcionario-prime-ng/funcionario-prime-ng.module').then(m => m.FuncionarioPrimeNgModule),
+    canActivate: [AuthguardService]
   }
 ];
 
