@@ -1,85 +1,41 @@
-<p-table [columns]="cols" [value]="funcionario$ |async" selectionMode="single" [(selection)]="selectedCar"
-    (onRowSelect)="onRowSelect($event)" [paginator]="true" [rows]="15">
-    <ng-template pTemplate="caption">
-        Lista de funcionarios
-    </ng-template>
-    <ng-template pTemplate="header" let-columns>
+<div class="card-header">
+    <h3>Funcionarios
+        <button class="text-right btn btn-outline-info btn-lg mr-0" (click)="add()">
+            <i class="fas fa-plus-circle"></i>
+        </button>
+    </h3>
+</div>
+
+<table class="table table-striped table-hover table-bordered col
+-centered">
+    <thead class="thead-dark">
         <tr>
-            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
-                {{col.header}}
-                <p-sortIcon [field]="col.field"></p-sortIcon>
-            </th>
+            <th class="text-center">Nome</th>
+            <th class="text-center">Email</th>
+            <th class="text-center">Função</th>
+            <th class="text-center">Departamento</th>
+            <th class="text-center">Ações</th>
         </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-rowData let-columns="columns">
-        <tr [pSelectableRow]="rowData">
-            <td *ngFor="let col of columns">
-                {{rowData[col.field]}}
+    </thead>
+    <tbody>
+        <tr *ngFor="let funcionario of funcionario$ | async">
+            <td class="text-center">{{funcionario.nome}}</td>
+            <td class="text-center">{{funcionario.email}}</td>
+            <td class="text-center">{{funcionario.funcao}}</td>
+            <td class="text-center">{{funcionario.departamento}}</td>
+            <td class="text-center">
+                <button type="button" (click)="selecionarFuncionario(funcionario)" class="btn btn-success ">
+                    <i class="fas fa-edit"></i>
+                </button>
+                <button type="button" (click)="delete(funcionario)" class="btn btn-danger ">
+                    <i class="fas fa-trash"></i>
+                </button>
             </td>
         </tr>
-    </ng-template>
-    <ng-template pTemplate="summary" let-rowData>
-        <div style="text-align:left">
-            <button type="button" pButton icon="pi pi-plus" (click)="showDialogToAdd()" label="Add"></button>
+    </tbody>
+</table>
 
-            <button type="button" (click)="selecionarFuncionario(selectedCar)" class="btn btn-success ">
-                <i class="fas fa-edit"></i>
-            </button>
-        </div>
-    </ng-template>
-</p-table>
-
-<button class="text-right btn btn-outline-info btn-lg mr-0" (click)="add()">
-    <i class="fas fa-plus-circle"></i>
-</button>
-
-<p-dialog header="Car Details" [(visible)]="displayDialog" [focusOnShow]="false" [responsive]="true" showEffect="fade"
-    [modal]="true" [style]="{width: '300px'}">
-    <div class="ui-g ui-fluid" *ngIf="selectedCar">
-        <div class="ui-g-12">
-            <div class="ui-g-4">
-                <label for="nome">Nome</label>
-            </div>
-            <div class="ui-g-8">
-                <input pInputText id="nome" [(ngModel)]="selectedCar.nome" autofocus />
-            </div>
-        </div>
-        <div class="ui-g-12">
-            <div class="ui-g-4">
-                <label for="email">Email</label>
-            </div>
-            <div class="ui-g-8">
-                <input pInputText id="email" [(ngModel)]="selectedCar.email" />
-            </div>
-        </div>
-        <div class="ui-g-12">
-            <div class="ui-g-4">
-                <label for="funcao">Funcao</label>
-            </div>
-            <div class="ui-g-8">
-                <input pInputText id="funcao" [(ngModel)]="selectedCar.funcao" />
-            </div>
-        </div>
-        <div class="ui-g-12">
-            <div class="ui-g-4">
-                <label for="departamento">Departamento</label>
-            </div>
-            <div class="ui-g-8">
-                <input pInputText id="departamento" [(ngModel)]="selectedCar.departamento" />
-            </div>
-        </div>
-    </div>
-    <p-footer>
-        <div class="ui-dialog-buttonpane ui-helper-clearfix">
-            <button type="button" pButton icon="pi pi-times" (click)="delete()" label="Delete"></button>
-            <button type="button" pButton icon="pi pi-check" (click)="save(selectedCar)" label="Save"></button>
-        </div>
-    </p-footer>
-</p-dialog>
-
-
-
-<p-dialog [(visible)]="displayDialogFuncionario" [modal]="true">
+<p-dialog [(visible)]="funcionario" [modal]="true">
     <p-header>
         Dados do Departamento
     </p-header>

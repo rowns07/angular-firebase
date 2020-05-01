@@ -6,6 +6,7 @@ import { InputMaskModule } from 'primeng/inputmask';
 import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
+import { DropdownModule } from 'primeng/dropdown';
 
 
 
@@ -18,7 +19,8 @@ import { ButtonModule } from 'primeng/button';
     InputMaskModule,
     InputTextModule,
     TableModule,
-    ButtonModule
+    ButtonModule,
+    DropdownModule
   ],
   exports: [
     DialogModule,
@@ -26,7 +28,8 @@ import { ButtonModule } from 'primeng/button';
     InputMaskModule,
     InputTextModule,
     TableModule,
-    ButtonModule
+    ButtonModule,
+    DropdownModule
   ],
   providers: [
 
