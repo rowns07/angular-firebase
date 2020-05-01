@@ -1,8 +1,14 @@
-<p-table [columns]="cols" [value]="funcionario$ |async" selectionMode="single" [(selection)]="selectedUser"
+<h3 class="mb-2 mt-4">Lista de Funcionarios</h3>
+<p-table #dt [columns]="cols" [value]="funcionario$ |async" selectionMode="single" [(selection)]="selectedUser"
     (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)" [paginator]="true" [rows]="15">
     <ng-template pTemplate="caption">
-        Lista de funcionarios
+        <div style="text-align: right">
+            <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+            <input type="text" pInputText size="50" placeholder="Global Filter"
+                (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+        </div>
     </ng-template>
+
     <ng-template pTemplate="header" let-columns>
         <tr>
             <th *ngFor="let col of columns" [pSortableColumn]="col.field">
@@ -51,19 +57,19 @@
         </div>
         <div class="ui-g-12">
             <div class="ui-g-4">
-                <label for="funcao">Funcao</label>
-            </div>
-            <div class="ui-g-8">
-                <input pInputText id="funcao" [(ngModel)]="selectedUser.funcao" />
-            </div>
-        </div>
-        <div class="ui-g-12">
-            <div class="ui-g-4">
                 <label for="departamento">Departamento</label>
             </div>
             <div class="ui-g-8">
                 <p-dropdown [options]="departamento$ | async" [(ngModel)]="selectedUser.departamento" optionLabel="nome"
                     placeholder="Selecione o Departamento"></p-dropdown>
+            </div>
+        </div>
+        <div class="ui-g-12">
+            <div class="ui-g-4">
+                <label for="funcao">Funcao</label>
+            </div>
+            <div class="ui-g-8">
+                <input pInputText id="funcao" [(ngModel)]="selectedUser.funcao" />
             </div>
         </div>
     </div>

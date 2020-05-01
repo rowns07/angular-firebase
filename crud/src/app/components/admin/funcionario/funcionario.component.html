@@ -42,24 +42,22 @@
     <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="form.value">
 
         <form [formGroup]="form">
-            <div>
+            <div class="mb-3">
                 <label for="ocorrencia">Nome</label>
                 <input type="text" pInputText formControlName="nome" />
             </div>
-            <div>
+            <div class="mb-3">
                 <label for="ocorrencia">Email</label>
                 <input type="email" pInputText formControlName="email" />
             </div>
-            <div>
-                <label for="ocorrencia">Funcao</label>
-                <input type="text" pInputText formControlName="funcao" />
-            </div>
-            <div>
+            <div class="mb-3">
                 <label for="ocorrencia">Departamento</label>
-                <!-- <input type="text" pInputText formControlName="departamento" /> -->
                 <p-dropdown [options]="departamentos$ | async" formControlName="departamento" optionLabel="nome"
                     name="nome" dataKey="nome" placeholder="teste"></p-dropdown>
-
+            </div>
+            <div class="mb-3">
+                <label for="ocorrencia">Funcao</label>
+                <input type="text" pInputText formControlName="funcao" />
             </div>
         </form>
 
