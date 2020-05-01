@@ -22,7 +22,7 @@
             <td class="text-center">{{funcionario.nome}}</td>
             <td class="text-center">{{funcionario.email}}</td>
             <td class="text-center">{{funcionario.funcao}}</td>
-            <td class="text-center">{{funcionario.departamento}}</td>
+            <td class="text-center">{{funcionario.departamento?.nome }}</td>
             <td class="text-center">
                 <button type="button" (click)="selecionarFuncionario(funcionario)" class="btn btn-success ">
                     <i class="fas fa-edit"></i>
@@ -56,7 +56,9 @@
             </div>
             <div>
                 <label for="ocorrencia">Departamento</label>
-                <input type="text" pInputText formControlName="departamento" />
+                <!-- <input type="text" pInputText formControlName="departamento" /> -->
+                <p-dropdown [options]="departamentos$ | async" formControlName="departamento" optionLabel="nome" name="nome" dataKey="nome"></p-dropdown>
+
             </div>
         </form>
 

@@ -1,12 +1,4 @@
 
-
-<!-- <a [routerLink]="['/admin/painel']" class="btn btn-primary ">
-    <i class="fa fa-search" aria-hidden="true"></i> Voltar</a> -->
-
-
-
-
-
     <p-table [columns]="cols" [value]="funcionario$ |async" selectionMode="single" [(selection)]="selectedUser"
     (onRowSelect)="onRowSelect($event)" [paginator]="true" [rows]="15">
     <ng-template pTemplate="caption">
@@ -22,15 +14,19 @@
     </ng-template>
     <ng-template pTemplate="body" let-rowData let-columns="columns">
         <tr [pSelectableRow]="rowData">
-            <td *ngFor="let col of columns">
+            <!-- <td *ngFor="let col of columns">
                 {{rowData[col.field]}}
-            </td>
+            </td> -->
+            <td>{{rowData.nome}}</td>
+            <td>{{rowData.email}}</td>
+            <td>{{rowData.funcao}}</td>
+            <td>{{rowData.departamento?.nome}}</td>
         </tr>
     </ng-template>
     <ng-template pTemplate="summary" let-rowData>
         <div style="text-align:left">
             <button type="button" pButton icon="pi pi-plus" (click)="showDialogToAdd()" label="Add"></button>
-
+            
             <button type="button" (click)="selecionarFuncionario(selectedUser)" class="btn btn-success ">
                 <i class="fas fa-edit"></i>
             </button>
@@ -43,12 +39,12 @@
 </button>
 
 <p-dialog header="Primeng Modal" [(visible)]="displayDialog" [focusOnShow]="false" [responsive]="true" showEffect="fade"
-    [modal]="true" [style]="{width: '300px'}">
-    <div class="ui-g ui-fluid" *ngIf="selectedUser">
-        <div class="ui-g-12">
-            <div class="ui-g-4">
-                <label for="nome">Nome</label>
-            </div>
+[modal]="true" [style]="{width: '300px'}">
+<div class="ui-g ui-fluid" *ngIf="selectedUser">
+    <div class="ui-g-12">
+        <div class="ui-g-4">
+            <label for="nome">Nome</label>
+        </div>
             <div class="ui-g-8">
                 <input pInputText id="nome" [(ngModel)]="selectedUser.nome" autofocus />
             </div>
@@ -74,7 +70,8 @@
                 <label for="departamento">Departamento</label>
             </div>
             <div class="ui-g-8">
-                <input pInputText id="departamento" [(ngModel)]="selectedUser.departamento" />
+                <!-- <input pInputText id="departamento" [(ngModel)]="selectedUser.departamento.nome" /> -->
+                <p-dropdown [options]="departamento$ | async" [(ngModel)]="selectedUser.departamento" optionLabel="nome" placeholder="Selecione o Departamento"></p-dropdown>
             </div>
         </div>
     </div>
@@ -93,7 +90,7 @@
         Dados do Departamento
     </p-header>
     <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="form.value">
-
+        
         <form [formGroup]="form">
             <div>
                 <label for="ocorrencia">Nome</label>
@@ -109,10 +106,13 @@
             </div>
             <div>
                 <label for="ocorrencia">Departamento</label>
-                <input type="text" pInputText formControlName="departamento" />
+                <!-- <input type="text" pInputText formControlName="departamento" /> -->
+                <!-- <p-dropdown [options]="departamento$ | async" formControlName="departamento" optionLabel="nome" name="departamento" ></p-dropdown> -->
+                <p-dropdown [options]="departamento$ | async" formControlName="departamento" optionLabel="nome" name="nome" dataKey="nome" placeholder="Selecione o Departamento"></p-dropdown>
+                
             </div>
         </form>
-
+        
     </div>
     <p-footer>
         <button [disabled]="!form.valid" type="button" class="btn btn-primary" (click)="saveForm()">
@@ -120,3 +120,6 @@
         </button>
     </p-footer>
 </p-dialog>
+
+<a [routerLink]="['/admin/painel']" class="btn btn-primary ">
+    <i class="fa fa-search" aria-hidden="true"></i> Voltar</a>
