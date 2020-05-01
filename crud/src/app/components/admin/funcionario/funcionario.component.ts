@@ -40,11 +40,11 @@ export class FuncionarioComponent implements OnInit {
   }
   configForm() {
     this.form = this.formBuilder.group({
-      id: new FormControl(''),
-      nome: new FormControl(Validators.required),
-      email: new FormControl([Validators.required, Validators.email]),
+      id: new FormControl(),
+      nome: new FormControl('',Validators.required),
+      email: new FormControl('',[Validators.required, Validators.email]),
       funcao: new FormControl(''),
-      departamento: new FormControl(Validators.required)
+      departamento: new FormControl('',Validators.required)
     });
   }
 

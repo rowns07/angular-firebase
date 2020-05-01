@@ -48,7 +48,7 @@
             </div>
             <div>
                 <label for="ocorrencia">Email</label>
-                <input type="text" pInputText formControlName="email" />
+                <input type="email" pInputText formControlName="email" />
             </div>
             <div>
                 <label for="ocorrencia">Funcao</label>
@@ -57,13 +57,18 @@
             <div>
                 <label for="ocorrencia">Departamento</label>
                 <!-- <input type="text" pInputText formControlName="departamento" /> -->
-                <p-dropdown [options]="departamentos$ | async" formControlName="departamento" optionLabel="nome" name="nome" dataKey="nome"></p-dropdown>
+                <p-dropdown [options]="departamentos$ | async" formControlName="departamento" optionLabel="nome"
+                    name="nome" dataKey="nome" placeholder="teste"></p-dropdown>
 
             </div>
         </form>
 
     </div>
     <p-footer>
+        <div *ngIf="form.controls['nome'].errors || form.controls['email'].errors || form.controls['departamento'].errors"
+            class="text-left text-warning">
+            Preenchimento obrigatorio
+        </div>
         <button [disabled]="!form.valid" type="button" class="btn btn-primary" (click)="saveForm()">
             <i class="fas fa-check-circle"></i> {{edit ? 'Atualizar' : 'Salvar'}}
         </button>

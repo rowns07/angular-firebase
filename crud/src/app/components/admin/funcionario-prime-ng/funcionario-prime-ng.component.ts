@@ -17,31 +17,18 @@ export class FuncionarioPrimeNgComponent implements OnInit {
 
   funcionario$: Observable<Funcionario[]>;
   departamento$: Observable<Departamento[]>;
-  displayDialogFuncionario: Funcionario;
-  departamentoFiltro: string;
   edit: boolean;
   form: FormGroup;
-  // form2: FormGroup;
-
-  funcionarioSelecionado: Funcionario;
   displayDialog: boolean;
   selectedUser: Funcionario;
   cols: any[];
 
-  // car: any;
-  // newCar: boolean;
-  // cars: Funcionario[];
 
   constructor(private funcionarioService: FuncionarioService, private departamentoService: DepartamentoService, private formBuilder: FormBuilder, private alertService: AlertService) { }
 
   ngOnInit(): void {
     this.funcionario$ = this.funcionarioService.list();
     this.departamento$ = this.departamentoService.list();
-    this.departamentoFiltro = 'TODOS';
-    // this.funcionarioSelecionado = new Funcionario()
-    this.configForm();
-
-
     this.cols = [
       { field: 'nome', header: 'NOME' },
       { field: 'email', header: 'EMAIL' },
@@ -57,7 +44,6 @@ export class FuncionarioPrimeNgComponent implements OnInit {
   showDialogToAdd() {
     this.edit = true;
     this.selectedUser = new Funcionario();
-    // this.funcionarioSelecionado = new Funcionario();
     this.displayDialog = true;
   }
 
@@ -65,13 +51,10 @@ export class FuncionarioPrimeNgComponent implements OnInit {
     this.funcionarioService.createOrUpdate(funcionarioSelecionado)
       .then(() => {
         this.alertService.alertSuccess(`Departamento ${this.edit ? 'salvo' : 'atualizado'} com sucesso`, '', 'success');
-        this.displayDialogFuncionario = undefined;
       })
       .catch((erro) => {
-        this.displayDialogFuncionario = undefined;
         this.alertService.errorAlert(`Erro ao ${this.edit ? 'salvo' : 'atualizado'} o departamento`, `Detalhes ${erro}`);
       });
-    this.form.reset();
     this.displayDialog = false;
   }
 
@@ -95,85 +78,12 @@ export class FuncionarioPrimeNgComponent implements OnInit {
 
   onRowSelect(funcionario: Funcionario) {
     this.edit = false;
-    // this.car = this.cloneCar(event.data);
     this.displayDialog = true;
-    this.funcionarioSelecionado = funcionario;
-    console.log('FuncionarioSelecionado - ', this.funcionarioSelecionado);
     console.log('selectedUser - ', this.selectedUser)
-
   }
 
-  // cloneCar(c: Funcionario) {
-  //   let car = {};
-  //   for (let prop in c) {
-  //     car[prop] = c[prop];
-  //   }
-  //   return car;
-  // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  add() {
-    this.form.reset();
-    this.edit = false;
-    this.displayDialogFuncionario = new Funcionario();
+  onRowUnselect(funcionario: Funcionario) {
+    this.selectedUser = undefined;
   }
 
-  configForm() {
-    this.form = this.formBuilder.group({
-      id: new FormControl(''),
-      nome: new FormControl(Validators.required),
-      email: new FormControl([Validators.required, Validators.email]),
-      funcao: new FormControl(''),
-      departamento: new FormControl(Validators.required)
-    });
-  }
-
-  selecionarFuncionario(funcionario: Funcionario) {
-    this.edit = true;
-    this.displayDialogFuncionario = new Funcionario();
-    this.form.setValue(funcionario);
-  }
-
-  saveForm(): void {
-    this.funcionarioService.createOrUpdate(this.form.value)
-      .then(() => {
-        this.alertService.alertSuccess(`Departamento ${this.edit ? 'salvo' : 'atualizado'} com sucesso`, '', 'success');
-        this.displayDialogFuncionario = undefined;
-      })
-      .catch((erro) => {
-        this.displayDialogFuncionario = undefined;
-        this.alertService.errorAlert(`Erro ao ${this.edit ? 'salvo' : 'atualizado'} o departamento`, `Detalhes ${erro}`);
-      });
-    this.form.reset();
-  }
-
-  deletarFuncionario(funcionario: Funcionario) {
-    Swal.fire({
-      title: 'Confirma a exclusão do departamento?',
-      text: '',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Sim',
-      cancelButtonText: 'Não'
-    }).then((result) => {
-      if (result.value) {
-        this.departamentoService.delete(funcionario.id)
-          .then(() =>
-            this.alertService.alertSuccess('Deletado com sucesso!'));
-      }
-    });
-  }
 }
