@@ -11,4 +11,9 @@ export class FuncionarioService extends IservicefirebaseService<Funcionario> {
   constructor(firestore: AngularFirestore) {
     super(Funcionario, firestore, 'funcionarios');
   }
+
+  getFuncionarioLogado(email: string) {
+    return this.firestore.collection<Funcionario>('funcionarios',
+      ref => ref.where('email', '==', ref)).valueChanges()
+  }
 }

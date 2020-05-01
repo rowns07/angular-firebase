@@ -32,6 +32,11 @@ const routes: Routes = [
     loadChildren: () => import('./components/admin/funcionario-prime-ng/funcionario-prime-ng.module').then(m => m.FuncionarioPrimeNgModule),
     canActivate: [AuthguardService]
   }
+  , {
+    path: 'admin/requisicao',
+    loadChildren: () => import('./components/admin/requisicao/requisicao.module').then(m => m.RequisicaoModule),
+    canActivate: [AuthguardService]
+  }
 ];
 
 @NgModule({
