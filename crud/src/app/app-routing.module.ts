@@ -36,6 +36,11 @@ const routes: Routes = [
     path: 'admin/requisicao',
     loadChildren: () => import('./components/admin/requisicao/requisicao.module').then(m => m.RequisicaoModule),
     canActivate: [AuthguardService]
+  },
+  {
+    path: 'admin/movimentacao',
+    loadChildren: () => import('./components/admin/movimentacao/movimentacao.module').then(m => m.MovimentacaoModule),
+    canActivate: [AuthguardService]
   }
 ];
 
