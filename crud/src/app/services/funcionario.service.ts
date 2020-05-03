@@ -14,6 +14,8 @@ export class FuncionarioService extends IservicefirebaseService<Funcionario> {
 
   getFuncionarioLogado(email: string) {
     return this.firestore.collection<Funcionario>('funcionarios',
-      ref => ref.where('email', '==', ref)).valueChanges()
+      ref =>
+        ref.where('email', '==', email)
+    ).valueChanges()
   }
 }

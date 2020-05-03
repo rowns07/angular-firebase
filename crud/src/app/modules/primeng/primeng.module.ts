@@ -7,6 +7,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 
 
 
@@ -20,7 +21,8 @@ import { DropdownModule } from 'primeng/dropdown';
     InputTextModule,
     TableModule,
     ButtonModule,
-    DropdownModule
+    DropdownModule,
+    InputTextareaModule
   ],
   exports: [
     DialogModule,
@@ -29,7 +31,8 @@ import { DropdownModule } from 'primeng/dropdown';
     InputTextModule,
     TableModule,
     ButtonModule,
-    DropdownModule
+    DropdownModule,
+    InputTextareaModule
   ],
   providers: [
 
