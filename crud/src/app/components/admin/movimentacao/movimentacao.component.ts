@@ -33,9 +33,9 @@ export class MovimentacaoComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.listRequisicoesDepartamentos();
     this.configForm();
     this.carregaStatus();
-    this.listRequisicoesDepartamentos();
   }
 
   configForm() {
@@ -52,11 +52,13 @@ export class MovimentacaoComponent implements OnInit {
   }
 
   listRequisicoesDepartamentos() {
-    this.requisicaoService.list()
+    debugger;
+    this.requisicoe$ = this.requisicaoService.list()
       .pipe(
         map((reqs: Requisicao[]) =>
           reqs.filter(r =>
-            r.destino.nome === this.funcionarioLogado.departamento.nome
+            r.destino.nome === this.funcionarioLogado.departamento.nome,
+            console.log('FUNCIONARIO LOGAO:', this.funcionarioLogado)
           )
         )
       )
@@ -68,7 +70,7 @@ export class MovimentacaoComponent implements OnInit {
     this.setValorPadrao();
     this.requisicaoSelecionada = requisicao;
     this.movimentacoes = (!requisicao.movimentacoes ? [] : requisicao.movimentacoes);
-    this.displayDialogMovimentacoes = true;
+    this.displayDialogMovimentacao = true;
   }
 
   setValorPadrao() {
