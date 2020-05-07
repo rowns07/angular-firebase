@@ -24,7 +24,8 @@ export class MovimentacaoComponent implements OnInit {
   displayDialogMovimentacao: boolean;
   displayDialogMovimentacoes: boolean;
   form: FormGroup;
-  listaStatus: string[];
+  listaStatus: any[];
+
 
   constructor(
     private requisicaoService: RequisicaoService,
@@ -48,7 +49,12 @@ export class MovimentacaoComponent implements OnInit {
   }
 
   carregaStatus() {
-    this.listaStatus = ['Aberto', 'Pendente', 'Processando', 'Não Autorizado', 'finalizado'];
+    this.listaStatus = [
+      { label: 'Aberto', value: 'Aberto' },
+      { label: 'Pendente', value: 'Pendente' },
+      { label: 'Processando', value: 'Processando' },
+      { label: 'Não Autorizado', value: 'Não Autorizado' },
+      { label: 'Finalizado', value: 'finalizado' }];
   }
 
   listRequisicoesDepartamentos() {

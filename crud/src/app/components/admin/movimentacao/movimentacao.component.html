@@ -19,7 +19,10 @@
             <td class="text-center">{{requisicao.dataAbertura?.toDate() | date : 'dd/MM/yyyy HH:mm'}}</td>
             <td class="text-center">{{requisicao.ultimaAtualizacao?.seconds * 1000 | date : 'dd/MM/yyyy HH:mm' }}</td>
             <td class="text-center">{{requisicao.destino.nome}}</td>
-            <td class="text-center">{{requisicao.status}}</td>
+            <td class="text-center">
+                <!-- {{requisicao.status?.label || 'Aberto TESTANDO'}} -->
+                {{!requisicao.status?.label ? 'Aberto': requisicao.status.label}}
+            </td>
             <td class="text-center">
                 <span class="badge badge-pill badge-secondary">
                     {{!requisicao.movimentacoes?.length ? '0': requisicao.movimentacoes?.length}}
@@ -58,7 +61,8 @@
         <form [formGroup]="form">
             <div class="mb-3">
                 <label for="status">Status*:</label>
-                <p-dropdown [options]="listaStatus" formControlName="status" placeholder="Selecione o status">
+                <p-dropdown [options]="listaStatus" formControlName="status" optionLabel="label" name="label"
+                    placeholder="Selecione o status">
                 </p-dropdown>
             </div>
             <div class="mb-3">

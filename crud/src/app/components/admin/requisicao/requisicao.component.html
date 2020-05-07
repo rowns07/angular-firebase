@@ -22,7 +22,12 @@
             <td class="text-center">{{requisicao.dataAbertura.toDate() | date : 'dd/MM/yyyy HH:mm'}}</td>
             <td class="text-center">{{requisicao.ultimaAtualizacao.toDate() | date : 'dd/MM/yyyy HH:mm'}}</td>
             <td class="text-center">{{requisicao.destino.nome}}</td>
-            <td class="text-center">{{requisicao.status}}</td>
+            <td class="text-center">
+                {{requisicao.status?.label || 'Aberto'}}
+                <!-- {{requisicao.status?.label}} -->
+                <!-- {{requisicao.status?.label || requisicao.status}} -->
+
+            </td>
             <td class="text-center">
                 <span class="badge badge-pill badge-secondary">
                     {{!requisicao.movimentacoes?.length ? '0': requisicao.movimentacoes?.length}}
@@ -49,7 +54,7 @@
             <div class="mb-3">
                 <label for="destino">Destino</label>
                 <p-dropdown [options]="departamento$ | async" formControlName="destino" optionLabel="nome"
-                    name="nome" dataKey="nome" placeholder="teste"></p-dropdown>
+                    name="nome" dataKey="nome" placeholder="Selecione o Destino"></p-dropdown>
             </div>
             <div class="mb-3">
                 <label for="descricao">Descricao</label><br>
