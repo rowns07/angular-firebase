@@ -20,7 +20,7 @@ export class ListaComponent implements OnInit {
   @Input() funcionarioLogado: Funcionario;
   @Output() displayChange = new EventEmitter();
 
-  listaStatus: string[];
+  listaStatus: Array<any>;
   displayDialogMovimentacao: boolean;
   form: FormGroup;
   edit: boolean;
@@ -44,10 +44,15 @@ export class ListaComponent implements OnInit {
   }
 
   carregaStatus() {
-    this.listaStatus = ['Aberto', 'Pendente', 'Processando', 'Não autorizada', 'Finalizado']
+    this.listaStatus = [
+      { label: 'Aberto', value: 'Aberto' },
+      { label: 'Pendente', value: 'Pendente' },
+      { label: 'Processando', value: 'Processando' },
+      { label: 'Não Autorizado', value: 'Não Autorizado' },
+      { label: 'Finalizado', value: 'finalizado' }];
   }
 
-  // RECEBE MOVIMENTACAO E INDEX ATRAVAS DOS PARAMETROS PARA PODER SETAR O FORMULARIO
+  // RECEBE MOVIMENTACAO E INDEX ATRAVES DOS PARAMETROS PARA PODER SETAR O FORMULARIO
   selecionaMovimento(mov: Movimentacao, index: number) {
     this.displayDialogMovimentacao = true;
     this.edit = true;

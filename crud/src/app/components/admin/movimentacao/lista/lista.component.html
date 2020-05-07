@@ -29,3 +29,40 @@
     </table>
 
 </p-dialog>
+
+<p-dialog [(visible)]="displayDialogMovimentacao" [modal]="true">
+    <p-header>
+        Dados da Requisição
+    </p-header>
+    <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="form.value">
+
+        <div class="mb-3">
+            <label for="solicitante">Solicitante: </label>
+            {{requisicaoSelecionada?.solicitante.nome}}
+        </div>
+        <div class="mb-3">
+            <label for="solicitacao">Solicitação:</label>
+            <textarea rows="5" cols="30" disabled pInputTextarea [value]="requisicaoSelecionada?.descricao"></textarea>
+        </div>
+        <form [formGroup]="form">
+            <div class="mb-3">
+                <label for="status">Status*:</label>
+                <p-dropdown [options]="listaStatus" formControlName="status" optionLabel="label" name="label"
+                    placeholder="Selecione o status">
+                </p-dropdown>
+            </div>
+            <div class="mb-3">
+                <label for="descricao">Descricao*:</label>
+                <textarea rows="5" cols="30" pInputTextarea formControlName="descricao"></textarea>
+            </div>
+        </form>
+    </div>
+    <p-footer>
+        <div *ngIf="form.controls['status'].errors || form.controls['descricao'].errors"
+            class="text-warning text-left ">
+            *Preenchimento Obrigatório</div>
+        <button [disabled]="!form.valid" type="button" class="btn btn-primary" (click)="update()">
+            <i class="fas fa-check-circle"></i> {{edit ? 'Atualizar' : 'Salvar'}}
+        </button>
+    </p-footer>
+</p-dialog>
