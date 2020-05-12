@@ -10,6 +10,7 @@
 -centered">
     <thead class="thead-dark">
         <tr>
+            <th class="text-center">Foto</th>
             <th class="text-center">Nome</th>
             <th class="text-center">Email</th>
             <th class="text-center">Função</th>
@@ -19,6 +20,9 @@
     </thead>
     <tbody>
         <tr *ngFor="let funcionario of funcionario$ | async">
+            <td class="text-center">
+                <img [src]="funcionario.foto || 'assets/img/no-image.jpg'" class="img-fluid" style="width: 100px;">
+            </td>
             <td class="text-center">{{funcionario.nome}}</td>
             <td class="text-center">{{funcionario.email}}</td>
             <td class="text-center">{{funcionario.funcao}}</td>
@@ -58,6 +62,11 @@
             <div class="mb-3">
                 <label for="ocorrencia">Funcao</label>
                 <input type="text" pInputText formControlName="funcao" />
+            </div>
+            <div class="mb-3">
+                <label for="ocorrencia">Foto</label>
+                <input type="file" #inputFile class="form-control" (change)="upload($event)" />
+                <progress style="width: 100%;" max="100" [value]="(uploadPercent | async)"></progress>
             </div>
         </form>
 

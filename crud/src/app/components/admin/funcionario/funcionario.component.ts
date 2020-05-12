@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Funcionario } from 'src/app/models/funcionario.model';
 import { Departamento } from 'src/app/models/departamento.model';
@@ -8,6 +8,7 @@ import { DepartamentoService } from 'src/app/services/departamento.service';
 import { AlertService } from 'src/app/services/alert.service';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { AngularFireUploadTask, AngularFireStorage } from '@angular/fire/storage';
 
 @Component({
   selector: 'app-funcionario',
@@ -21,8 +22,13 @@ export class FuncionarioComponent implements OnInit {
   funcionario$: Observable<Funcionario[]>;
   funcionario: Funcionario;
   form: FormGroup;
+  @ViewChild('inputFile', { static: true }) inputFile: ElementRef;
+  uploadPercent: Observable<number>;
+  downloadUrl: Observable<string>;
+  task: AngularFireUploadTask;
+  complete: boolean;
 
-  constructor(private router: Router, private funcionarioService: FuncionarioService, private departamentoService: DepartamentoService, private formBuilder: FormBuilder, private alertService: AlertService) { }
+  constructor(private router: Router, private funcionarioService: FuncionarioService, private departamentoService: DepartamentoService, private formBuilder: FormBuilder, private alertService: AlertService, private storage: AngularFireStorage) { }
 
   ngOnInit(): void {
     this.funcionario$ = this.funcionarioService.list();
@@ -41,10 +47,11 @@ export class FuncionarioComponent implements OnInit {
   configForm() {
     this.form = this.formBuilder.group({
       id: new FormControl(),
-      nome: new FormControl('',Validators.required),
-      email: new FormControl('',[Validators.required, Validators.email]),
+      nome: new FormControl('', Validators.required),
+      email: new FormControl('', [Validators.required, Validators.email]),
       funcao: new FormControl(''),
-      departamento: new FormControl('',Validators.required)
+      departamento: new FormControl('', Validators.required),
+      foto: new FormControl()
     });
   }
 
@@ -82,6 +89,24 @@ export class FuncionarioComponent implements OnInit {
         this.alertService.errorAlert(`Erro ao ${this.edit ? 'salvo' : 'atualizado'} o departamento`, `Detalhes ${erro}`);
       });
     this.form.reset();
+  }
+
+  async upload(event) {
+    this.complete = false;
+    const file = event.target.files[0];
+    const path = `funcionarios/${new Date().getTime().toString()}`;
+    const fileRef = this.storage.ref(path);
+    this.task = this.storage.upload(path, file);
+    this.task.then(up => {
+      fileRef.getDownloadURL().subscribe(url => {
+        this.complete = true;
+        this.form.patchValue({
+          foto: url
+        })
+      });
+    });
+    this.uploadPercent = this.task.percentageChanges();
+    this.inputFile.nativeElement.value = '';
   }
 
 }
